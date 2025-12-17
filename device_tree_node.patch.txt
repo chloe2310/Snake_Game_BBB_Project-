@@ -1,0 +1,65 @@
+&ocp{
+	P9_12_pinmux { status = "disabled"; };
+	P9_13_pinmux { status = "disabled"; };
+	P9_17_pinmux { status = "disabled"; };
+	P9_18_pinmux { status = "disabled"; };
+	P9_21_pinmux { status = "disabled"; };
+	P9_22_pinmux { status = "disabled"; };
+	P9_24_pinmux { status = "disabled"; };
+	P9_26_pinmux { status = "disabled"; };
+};
+
+&am33xx_pinmux {
+	display_pins: display_pins{
+		pinctrl-single,pins = <
+		    AM33XX_PADCONF(0x950, PIN_INPUT, MUX_MODE0)
+			AM33XX_PADCONF(0x954, PIN_INPUT, MUX_MODE0)
+			AM33XX_PADCONF(0x958, PIN_INPUT, MUX_MODE0)
+			AM33XX_PADCONF(0x95c, PIN_OUTPUT_PULLUP, MUX_MODE0)
+
+			AM33XX_PADCONF(0x878, PIN_OUTPUT_PULLUP, MUX_MODE7)
+			AM33XX_PADCONF(0x874, PIN_OUTPUT_PULLUP, MUX_MODE7)
+		>;
+	};
+
+	button_pin: button_pin{
+		pinctrl-single,pins = <
+		    AM33XX_PADCONF(0x89c, PIN_INPUT_PULLUP, MUX_MODE7)
+		    AM33XX_PADCONF(0x898, PIN_INPUT_PULLUP, MUX_MODE7)
+		    AM33XX_PADCONF(0x830, PIN_INPUT_PULLUP, MUX_MODE7)
+		    AM33XX_PADCONF(0x834, PIN_INPUT_PULLUP, MUX_MODE7)
+		    AM33XX_PADCONF(0x824, PIN_INPUT_PULLUP, MUX_MODE7)
+		>;		
+	};
+};
+
+
+
+&i2c2 {
+	status = "okay";
+
+	ssd1306:ssd1306@3c {
+		compatible = "ssd1306_screen_device";
+		reg = <0x3c>;
+		status = "okay";
+	};
+};	
+
+
+/{
+	foo_device{
+		compatible = "gpio-descriptor-based";
+		pinctrl-names = "default";
+		pinctrl-0 = <&button_pin>;
+
+		led67-gpios = <&gpio2 3 GPIO_ACTIVE_HIGH>;
+		button68-gpios = <&gpio2 4 GPIO_ACTIVE_LOW>;
+		button69-gpios = <&gpio2 5 GPIO_ACTIVE_LOW>;
+		button45-gpios = <&gpio1 13 GPIO_ACTIVE_LOW>;
+		button44-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>;
+		button23-gpios = <&gpio0 23 GPIO_ACTIVE_LOW>;
+
+		status = "okay";
+	};
+
+};
